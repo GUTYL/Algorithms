@@ -1,5 +1,5 @@
 class UnionFind:
-    """union-find算法"""
+    """union-find算法的API及初始化"""
 
     def __init__(self, n: int):
         # 分量id，初始化，以触点作为索引
@@ -65,7 +65,8 @@ class WeightedQuickUnion(UnionFind):
     """加权quick-union算法实现"""
 
     def __init__(self, n: int):
-        super(WeightedQuickUnion, self).__init__(n)
+        super().__init__(n)
+        # （由触点索引的）各个根节点所对应的分量的大小
         self._sz = [i for i in range(n)]
 
     def find(self, p: int) -> int:
@@ -87,42 +88,3 @@ class WeightedQuickUnion(UnionFind):
             self._id[j] = i
             self._sz[i] += self._sz[j]
         self._count -= 1
-
-
-def main_read_file():
-    """从文件中读取数据"""
-    with open('../algs4-data/tinyUF.txt', 'r') as f:
-        n = int(f.readline().strip())
-        # 1.5.2.1 quick-find算法
-        # uf = QuickFind(n)
-
-        # 1.5.2.3 quick-union算法
-        # uf = QuickUnion(n)
-
-        # 1.5.2.6 加权quick-union算法
-        uf = WeightedQuickUnion(n)
-        while i := f.readline():
-            p, q = map(int, i.split())
-            if uf.connected(p, q):
-                continue
-            uf.union(p, q)
-            print(f"{p}  {q}")
-        print(f"{uf.count()} components")
-
-
-def main_input():
-    """从输入中获取数据"""
-    n = int(input())
-    # 1.5.2.1 quick-find算法
-    uf = QuickFind(n)
-    while in_str := input():
-        p, q = map(int, in_str.split())
-        if uf.connected(p, q):
-            continue
-        uf.union(p, q)
-        print(f"{p}  {q}")
-    print(f"{uf.count()} components")
-
-
-if __name__ == '__main__':
-    main_read_file()
