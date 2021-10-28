@@ -67,7 +67,7 @@ class WeightedQuickUnion(UnionFind):
     def __init__(self, n: int):
         super().__init__(n)
         # （由触点索引的）各个根节点所对应的分量的大小
-        self._sz = [i for i in range(n)]
+        self._sz = [1 for i in range(n)]
 
     def find(self, p: int) -> int:
         # 跟随链接找到跟节点
