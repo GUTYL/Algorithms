@@ -5,3 +5,4 @@ algs4-data/
 algs4/
 pds/
 *.py[cod]
+test.py

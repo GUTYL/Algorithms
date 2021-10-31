@@ -1,3 +1,4 @@
+import sys
 from typing import List
 
 
@@ -15,6 +16,21 @@ class Solution:
                 if tmp >= target:
                     return i
                 start += 1
+
+    def minSubArrayLen_update(self, target: int, nums: List[int]) -> int:
+        """方向相同的双指针优化
+        """
+        left = 0
+        sum_ = 0
+        min_len = sys.maxsize
+        for right in range(len(nums)):
+            sum_ += nums[right]
+            while left <= right and sum_ >= target:
+                min_len = min(min_len, right - left + 1)
+                sum_ -= nums[left]
+                left += 1
+
+        return 0 if min_len == sys.maxsize else min_len
 
 
 s = Solution()
