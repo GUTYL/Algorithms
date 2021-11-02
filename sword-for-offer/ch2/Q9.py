@@ -20,6 +20,21 @@ class Solution:
             i += 1
         return result
 
+    def numSubarrayProductLessThanK_update1(self, nums: List[int], k: int) -> int:
+        """使用方向相同的双指针更新
+        """
+        product = 1
+        left = 0
+        result = 0
+        for right, num in enumerate(nums):
+            product *= num
+            while left <= right and product >= k:
+                product //= nums[left]
+                left += 1
+            if left <= right:
+                result += right - left + 1
+        return result
+
 
 s = Solution()
 print(s.numSubarrayProductLessThanK([1, 2, 3], 0))
