@@ -82,6 +82,7 @@ class Solution:
 
 
     def postorder_traversal_recursion_iter(self, root):
+        """迭代实现二叉树后续遍历"""
         result = []
         stack = []
         cur_node = root
