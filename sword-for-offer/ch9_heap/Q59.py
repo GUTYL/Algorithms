@@ -2,7 +2,8 @@ import heapq
 from typing import List
 
 class KthLargest:
-
+    """构造一个含有k个元素的最小堆
+    堆顶即为数据流中第k大的元素"""
     def __init__(self, k: int, nums: List[int]):
         self.lens = k
         self.nums = []
