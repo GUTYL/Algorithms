@@ -49,6 +49,8 @@ fruits.pop()
 
 ### 字符串
 
+#### 字符串常用操作
+
 ```python
 # 创建字符串
 string = "abcde"
@@ -84,6 +86,51 @@ string.split(sep=None, maxsplit=- 1)
 string.startswith(prefix[, start[, end]])
 ```
 
+#### 字典树
+
+```python
+class Trie:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.tree = {}
+
+
+    def insert(self, word: str) -> None:
+        """
+        Inserts a word into the trie.
+        """
+        tree = self.tree
+        for w in word:
+            tree = tree.setdefault(w, {})
+        # 是否是一个完整的单词
+        tree["is_word"] = True
+
+    def search(self, word: str) -> bool:
+        """
+        Returns if the word is in the trie.
+        """
+        tree = self.tree
+        for w in word:
+            if w not in tree: return False
+            tree = tree[w]
+        return tree.get('is_word', False)
+
+    def startsWith(self, prefix: str) -> bool:
+        """
+        Returns if there is any word in the trie that starts with the given prefix.
+        """
+        tree = self.tree
+        for ch in prefix:
+            if ch not in tree: return False
+            tree = tree[ch]
+        return True
+
+
+```
+
 ### 链表
 
 ```python
@@ -102,7 +149,7 @@ python中为字典（dict）
 
 ```python
 # 1 创建空字典
-a = {}
+d = {}
 
 # 2 返回字典 d 中使用的所有键的列表。
 list(d)
@@ -139,6 +186,12 @@ d.pop(key[, default])
 
 # 13 如果字典存在键 key ，返回它的值。如果不存在，插入值为 default 的键 key ，并返回 default 。 default 默认为 None。
 d.setdefault(key[, default])
+# 等价于
+def setdefault(d, key, default=None):
+    if d.get(key):
+        return d.get(key)
+    d[key] = default
+    return default
 ```
 
 ### 队列
@@ -206,9 +259,14 @@ class TreeNode:
 
 python中默认为最小堆
 
+可以将堆中每个数字乘以-1，来实现最大堆
+
+获取最大值时，将根节点的值再次乘以-1
+
 ```python
 import heapq
 
+heap = []
 # 将 item 的值加入 heap 中，保持堆的不变性。
 heapq.heappush(heap, item)
 
@@ -302,7 +360,11 @@ sorted(students, key=lambda x: newgrades[x])
 
 ### 枚举（遍历、排列、组合）
 
+
+
 ### 滑窗
+
+
 
 ### 双指针
 
