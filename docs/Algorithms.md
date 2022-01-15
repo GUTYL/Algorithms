@@ -47,6 +47,8 @@ fruits.pop()
 # list.copy()
 ```
 
+
+
 ### 字符串
 
 #### 字符串常用操作
@@ -85,6 +87,8 @@ string.split(sep=None, maxsplit=- 1)
 # 10 如果字符串以指定的 prefix 开始则返回 True，否则返回 False。 prefix 也可以为由多个供查找的前缀构成的元组。 如果有可选项 start，将从所指定位置开始检查。 如果有可选项 end，将在所指定位置停止比较。
 string.startswith(prefix[, start[, end]])
 ```
+
+
 
 #### 字典树
 
@@ -131,6 +135,8 @@ class Trie:
 
 ```
 
+
+
 ### 链表
 
 ```python
@@ -142,6 +148,8 @@ class ListNode:
         # 指向下一个节点
         self.next = next
 ```
+
+
 
 ### 哈希表
 
@@ -194,6 +202,8 @@ def setdefault(d, key, default=None):
     return default
 ```
 
+
+
 ### 队列
 
 ```python
@@ -231,7 +241,6 @@ stack.append(6)
 # 从堆栈顶部取出元素
 stack.pop()
 
-
 ### 2 使用标准库collections.deque(双端队列）实现
 from collections import deque
 stack = deque()
@@ -254,6 +263,108 @@ class TreeNode:
         # 指向右节点
         self.right = right
 ```
+
+#### 二叉树的遍历
+
+```python
+# 二叉树的遍历
+
+class Solution:
+    def inorder_traversal_recursion(self, root: TreeNode) -> list:
+        """递归实现二叉树中序遍历"""
+        result = []
+        self.inorder_traversal_dfs(root, result)
+        return result
+
+    def inorder_traversal_dfs(self, root, result):
+        if root:
+            self.inorder_traversal_dfs(root.left, result)
+            result.append(root.val)
+            self.inorder_traversal_dfs(root.right, result)
+
+    def inorder_traversal_iter(self, root: TreeNode) -> list:
+        """迭代，使用栈实现二叉树中序遍历"""
+        result = []
+        stack = []
+        # 当前节点
+        cur_node = root
+        # 当前节点非空，或栈非空
+        while cur_node or stack:
+            while cur_node:
+                stack.append(cur_node)
+                # 获取left节点
+                cur_node = cur_node.left
+            cur_node = stack.pop()
+            result.append(cur_node.val)
+            # 获取当前节点的right子节点，如果right子节点为空，将会获取父节点
+            cur_node = cur_node.right
+        return result
+
+    def preorder_traversal_recursion(self, root: TreeNode) -> list:
+        """递归实现二叉树前序遍历"""
+        result = []
+        self.preorder_traversal_dfs(root, result)
+        return result
+
+    def preorder_traversal_dfs(self, root, result):
+        if root:
+            result.append(root.val)
+            self.preorder_traversal_dfs(root.left, result)
+            self.preorder_traversal_dfs(root.right, result)
+
+    def preorder_traversal_iter(self, root: TreeNode) -> list:
+        """迭代实现二叉树前序遍历"""
+        result = []
+        stack = []
+        # 当前节点
+        cur_node = root
+        # 当前节点非空，或栈非空
+        while cur_node or stack:
+            while cur_node:
+                result.append(cur_node.val)
+                stack.append(cur_node)
+                # 获取left节点
+                cur_node = cur_node.left
+            cur_node = stack.pop()
+            # 获取当前节点的right子节点，如果right子节点为空，将会获取父节点
+            cur_node = cur_node.right
+        return result
+
+    def postorder_traversal_recursion(self, root: TreeNode) -> list:
+        """递归实现二叉树后续遍历"""
+        result = []
+        self.postorder_traversal_dfs(root, result)
+        return result
+
+    def postorder_traversal_dfs(self, root, result):
+        if root:
+            self.postorder_traversal_dfs(root.left, result)
+            self.postorder_traversal_dfs(root.right, result)
+            result.append(root.val)
+
+
+    def postorder_traversal_recursion_iter(self, root):
+        """迭代实现二叉树后续遍历"""
+        result = []
+        stack = []
+        cur_node = root
+        prev = None
+        while cur_node or stack:
+            while cur_node:
+                stack.append(cur_node)
+                cur_node = cur_node.left
+            cur_node = stack[-1]
+            if cur_node.right and cur_node.right != prev:
+                cur_node = cur_node.right
+            else:
+                stack.pop()
+                result.append(cur_node.val)
+                prev = cur_node
+                cur_node = None
+        return result
+```
+
+
 
 ### 堆（优先队列、二叉堆）
 
@@ -289,9 +400,9 @@ heapq.nlargest(n, iterable, key=None)
 heapq.nsmallest(n, iterable, key=None)
 ```
 
+
+
 ### 图
-
-
 
 
 
@@ -425,6 +536,21 @@ mid = (low + high) >> 1
 ```
 
 ### 搜索（深搜、广搜）
+
+深度优先搜索和广度优先搜索是两种最常见的优先搜索方法，它们被广泛地运用在图和树等结构中进行搜索。
+
+#### 深度优先搜索（DFS）
+
+深度优先搜索（depth-first seach，DFS）在搜索到一个新的节点时，立即对该新节点进行遍历；因此遍历需要用先入后出的栈来实现，也可以通过与栈等价的递归来实现。对于树结构而言，由于总是对新节点调用遍历，因此看起来是向着“深”的方向前进。
+
+深度优先搜索也可以用来检测环路：记录每个遍历过的节点的父节点，若一个节点被再次遍历且父节点不同，则说明有环。我们也可以用之后会讲到的拓扑排序判断是否有环路，若最后存在入度不为零的点，则说明有环。
+有时我们可能会需要对已经搜索过的节点进行标记，以防止在遍历时重复搜索某个节点，这种做法叫做状态记录或记忆化（memoization）。
+
+#### 广度优先搜索（BFS）
+
+
+
+
 
 ### 贪心
 
