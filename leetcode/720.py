@@ -12,9 +12,10 @@ class Solution:
                     continue
                 time += 1
             if time == len(word) and len(word) >= len(result):
-                if not(len(word) == len(result) and word > result):
+                if not (len(word) == len(result) and word > result):
                     result = word
         return result
+
 
 s = Solution()
 print(s.longestWord(["a", "banana", "app", "appl", "ap", "apply", "apple"]))
