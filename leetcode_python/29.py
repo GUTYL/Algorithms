@@ -1,4 +1,4 @@
-class Solution:
+class Solution【未完成】:
     def process1(self, dividend: int, divisor: int):
         """dividend > 0, divisor > 0"""
         result = -1 if divisor < 0 else 1
