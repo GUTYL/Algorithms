@@ -6,3 +6,8 @@ algs4/
 pds/
 *.py[cod]
 test.py
+
+# java 文件
+leetcode_java/target/
+leetcode_java/main/
+leetcode_java/pom.xml
