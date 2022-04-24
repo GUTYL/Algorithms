@@ -38,11 +38,16 @@ class RangeFreqQuery {
         int right = n;
         while (left < right) {
             int mid = (left + right) >> 1;
-            if (target >= values.get(mid)) {
-                left = mid + 1;
-            } else {
+            if (values.get(mid) > target) {
                 right = mid;
+            } else {
+                left = mid + 1;
             }
+            // if (target >= values.get(mid)) {
+            //     left = mid + 1;
+            // } else {
+            //     right = mid;
+            // }
         }
         return left;
     }
@@ -53,19 +58,22 @@ class RangeFreqQuery {
         int right = n;
         while (left < right) {
             int mid = (left + right) >> 1;
-            if (target <= values.get(mid)) {
+            if (values.get(mid) >= target) {
                 right = mid;
             } else {
                 left = mid + 1;
             }
+            // if (target <= values.get(mid)) {
+            //    right = mid;
+            // } else {
+            //     left = mid + 1;
+            // }
         }
         return left;
     }
 }
 
 public class _2080 {
-
-
     public static void main(String[] args) {
         int[] t1 = new int[]{12, 33, 4, 56, 22, 2, 34, 33, 22, 12, 34, 56};
 
