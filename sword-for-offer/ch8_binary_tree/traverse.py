@@ -1,3 +1,6 @@
+from collections import deque
+
+
 # 二叉树的遍历
 
 # Definition for a binary tree node.
@@ -6,6 +9,7 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+
 
 class Solution:
     def inorder_traversal_recursion(self, root: TreeNode) -> list:
@@ -80,8 +84,7 @@ class Solution:
             self.postorder_traversal_dfs(root.right, result)
             result.append(root.val)
 
-
-    def postorder_traversal_recursion_iter(self, root):
+    def postorder_traversal_iter(self, root):
         """迭代实现二叉树后续遍历"""
         result = []
         stack = []
@@ -100,6 +103,21 @@ class Solution:
                 prev = cur_node
                 cur_node = None
         return result
+
+    def level_order_traversal(self, root):
+        """迭代实现二叉树的层序遍历"""
+        nodes = deque()
+        nodes.append(root)
+        result = []
+        while nodes:
+            node = nodes.popleft()
+            result.append(node.val)
+            if node.left:
+                nodes.append(node.left)
+            if node.right:
+                nodes.append(node.right)
+        return result
+
 
 root = TreeNode(1)
 
@@ -125,4 +143,6 @@ print(s.preorder_traversal_recursion(root))
 print(s.preorder_traversal_iter(root))
 print("# 后序遍历：")
 print(s.postorder_traversal_recursion(root))
-print(s.postorder_traversal_recursion_iter(root))
+print(s.postorder_traversal_iter(root))
+print("# 层序遍历：")
+print(s.level_order_traversal(root))
